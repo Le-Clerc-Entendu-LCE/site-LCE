@@ -189,6 +189,8 @@ Le workflow **`.github/workflows/deploy.yml`** se déclenche :
 6. Job `deploy` : `actions/deploy-pages@v4` — publication sur
    l'environnement `github-pages`
 
+URL publique : `https://le-clerc-entendu-lce.github.io/site-LCE/`
+
 ### Configuration GitHub Pages requise
 
 **Une seule fois**, dans le repo GitHub :

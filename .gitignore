@@ -3,3 +3,10 @@ dist/
 .DS_Store
 *.log
 .vite/
+
+# Claude Code: keep only launch.json, ignore everything else
+.claude/*
+!.claude/launch.json
+
+# FUSE leftover files from the bind mount
+.fuse_hidden*
