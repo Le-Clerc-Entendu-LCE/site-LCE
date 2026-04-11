@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adhérer · LCE — Le Clerc Entendu</title>
+  <meta name="description" content="Adhérez à LCE, syndicat indépendant des salariés du notariat. Défense juridique, assistance, représentation. Réduction d'impôt de 66 % des cotisations.">
+  <link rel="icon" type="image/png" href="/logo_LCE.png">
+</head>
+<body data-page="adherer">
+  <div id="lce-nav"></div>
+
+  <main style="padding-top:88px;">
+
+    <section class="page-header">
+      <div class="container">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Accueil</a></li>
+            <li class="breadcrumb-item active">Adhérer</li>
+          </ol>
+        </nav>
+        <h1>Adhérer à LCE</h1>
+        <p class="lead">Rejoignez la voix libre et indépendante des salariés du notariat. Ensemble, faisons entendre les clercs.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-lg-5">
+            <h2 class="section-title">Pourquoi adhérer&nbsp;?</h2>
+            <p>Adhérer à LCE, c'est soutenir un syndicat professionnel exclusivement dédié au notariat, sans affiliation, sans agenda politique, sans consigne extérieure à la branche.</p>
+
+            <h3 class="h5 fw-bold mt-4">Vos avantages d'adhérent</h3>
+            <ul class="list-checked">
+              <li><strong>Défense juridique</strong> — accompagnement en cas de conflit individuel avec votre employeur.</li>
+              <li><strong>Assistance personnalisée</strong> — réponses à vos questions sur la CCN 2205, la CRPCEN, votre contrat.</li>
+              <li><strong>Soutien collectif</strong> — action syndicale concertée au sein de votre office ou de la branche.</li>
+              <li><strong>Représentation</strong> — participation à la vie syndicale et possibilité de création d'une section syndicale dans votre office dès 2 adhérents.</li>
+              <li><strong>Déduction fiscale</strong> — 66&nbsp;% de votre cotisation vous sont restitués sous forme de réduction d'impôt (art. 199 quater C du CGI).</li>
+              <li><strong>Information exclusive</strong> — newsletters, analyses, alertes sectorielles.</li>
+            </ul>
+
+            <div class="bg-sand p-4 rounded-3 mt-4">
+              <strong class="text-orange d-block mb-2">Déduction fiscale</strong>
+              <p class="mb-0 small">En application de l'article <strong>199 quater C</strong> du Code général des impôts, vos cotisations syndicales ouvrent droit à une <strong>réduction d'impôt sur le revenu égale à 66 %</strong> de leur montant, dans la limite de 1 % du salaire brut imposable.</p>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <form class="form-lce" onsubmit="return false;" novalidate>
+              <h3 class="h4 fw-bold mb-1">Bulletin d'adhésion en ligne</h3>
+              <hr class="divider-orange">
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="f-nom" class="form-label">Nom *</label>
+                  <input type="text" class="form-control" id="f-nom" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="f-prenom" class="form-label">Prénom *</label>
+                  <input type="text" class="form-control" id="f-prenom" required>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="f-email" class="form-label">Email *</label>
+                  <input type="email" class="form-control" id="f-email" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="f-tel" class="form-label">Téléphone</label>
+                  <input type="tel" class="form-control" id="f-tel">
+                </div>
+
+                <div class="col-md-8">
+                  <label for="f-office" class="form-label">Office notarial employeur *</label>
+                  <input type="text" class="form-control" id="f-office" required>
+                </div>
+                <div class="col-md-4">
+                  <label for="f-ville" class="form-label">Ville *</label>
+                  <input type="text" class="form-control" id="f-ville" required>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="f-contrat" class="form-label">Type de contrat *</label>
+                  <select class="form-select" id="f-contrat" required>
+                    <option value="">Choisissez...</option>
+                    <option>CDI</option>
+                    <option>CDD</option>
+                    <option>Apprentissage</option>
+                    <option>Intérim</option>
+                    <option>Congé parental</option>
+                    <option>Demandeur d'emploi</option>
+                    <option>Autre</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="f-fonction" class="form-label">Fonction *</label>
+                  <input type="text" class="form-control" id="f-fonction" placeholder="Clerc, formaliste, comptable..." required>
+                </div>
+
+                <div class="col-12">
+                  <label for="f-cotisation" class="form-label">Montant de cotisation souhaité (€) *</label>
+                  <input type="number" class="form-control" id="f-cotisation" min="0" step="1" required>
+                  <div class="form-text">Cotisation libre. Rappel&nbsp;: 66&nbsp;% sont déductibles de votre impôt sur le revenu.</div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="f-rgpd" required>
+                    <label class="form-check-label small" for="f-rgpd">
+                      J'accepte que mes données soient utilisées pour traiter mon adhésion, conformément à la politique de confidentialité de LCE (RGPD).
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-12 d-flex flex-wrap gap-3 mt-2">
+                  <button type="submit" class="btn btn-primary btn-lg px-4">Envoyer mon adhésion</button>
+                  <a href="#" class="btn btn-outline-secondary btn-lg">Télécharger le bulletin PDF</a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="lce-footer"></div>
+  <div id="lce-floating"></div>
+
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

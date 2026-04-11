@@ -1,0 +1,571 @@
+// LCE brand variables — must be defined BEFORE bootstrap import
+$lce-orange: #F47920;
+$lce-orange-dark: #D9630D;
+$lce-marine: #1A2B4A;
+$lce-marine-dark: #0F1B30;
+$lce-white: #FFFFFF;
+$lce-sand: #FBF7F2;
+
+// Bootstrap overrides
+$primary: $lce-orange;
+$secondary: $lce-marine;
+$dark: $lce-marine;
+$light: $lce-sand;
+$body-color: $lce-marine;
+$body-bg: $lce-white;
+$link-color: $lce-orange;
+$link-hover-color: $lce-orange-dark;
+
+$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+  "Helvetica Neue", Arial, sans-serif;
+$headings-font-weight: 700;
+$headings-color: $lce-marine;
+
+$border-radius: 0.5rem;
+$border-radius-lg: 0.75rem;
+
+// Bootstrap (full import — tree-shakeable later if needed)
+@import "bootstrap/scss/bootstrap";
+
+// ---------- Global ----------
+body {
+  background-color: $lce-white;
+  color: $lce-marine;
+}
+
+.text-marine {
+  color: $lce-marine !important;
+}
+.text-orange {
+  color: $lce-orange !important;
+}
+.bg-marine {
+  background-color: $lce-marine !important;
+  color: $lce-white;
+}
+.bg-orange {
+  background-color: $lce-orange !important;
+  color: $lce-white;
+}
+.bg-sand {
+  background-color: $lce-sand !important;
+}
+
+// ---------- Navbar ----------
+.navbar-lce {
+  background-color: $lce-marine;
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
+
+  .navbar-brand {
+    color: $lce-white;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+
+    img {
+      height: 44px;
+      width: auto;
+    }
+    .brand-text {
+      line-height: 1;
+      .brand-main {
+        display: block;
+        font-size: 1.1rem;
+        letter-spacing: 0.02em;
+      }
+      .brand-sub {
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 400;
+        color: $lce-orange;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+    }
+  }
+
+  .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-weight: 500;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+
+    &:hover,
+    &:focus,
+    &.active {
+      color: $lce-orange !important;
+    }
+  }
+
+  .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.3);
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
+
+  .btn-nav-adherer {
+    background-color: $lce-orange;
+    color: $lce-white !important;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    margin-left: 0.5rem;
+
+    &:hover {
+      background-color: $lce-orange-dark;
+    }
+  }
+}
+
+// ---------- Hero ----------
+.hero-lce {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    $lce-marine 0%,
+    $lce-marine-dark 55%,
+    $lce-marine 100%
+  );
+  color: $lce-white;
+  padding: 6rem 0 5rem;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -160px;
+    width: 520px;
+    height: 520px;
+    background: $lce-orange;
+    opacity: 0.12;
+    border-radius: 50%;
+    filter: blur(6px);
+  }
+
+  h1 {
+    color: $lce-white;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-kicker {
+    display: inline-block;
+    background: rgba(244, 121, 32, 0.18);
+    color: $lce-orange;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-lead {
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 640px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-logo {
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+  }
+}
+
+// ---------- Sections ----------
+.section {
+  padding: 5rem 0;
+}
+
+.section-title {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 2.5rem;
+  font-weight: 800;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: $lce-orange;
+    margin-top: 0.75rem;
+    border-radius: 2px;
+  }
+
+  &.text-center {
+    display: block;
+    &::after {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+// ---------- Feature card ----------
+.feature-card {
+  background-color: $lce-white;
+  border: 1px solid rgba(26, 43, 74, 0.08);
+  border-radius: 0.75rem;
+  padding: 2rem 1.75rem;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(26, 43, 74, 0.1);
+    border-color: rgba(244, 121, 32, 0.3);
+  }
+
+  .feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+    background-color: rgba(244, 121, 32, 0.12);
+    color: $lce-orange;
+    margin-bottom: 1.25rem;
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    color: rgba(26, 43, 74, 0.78);
+    margin-bottom: 0;
+  }
+}
+
+// ---------- Banner independance ----------
+.banner-indep {
+  background-color: $lce-orange;
+  color: $lce-white;
+  padding: 3rem 0;
+  text-align: center;
+
+  h2 {
+    color: $lce-white;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0;
+    font-size: 1.1rem;
+  }
+}
+
+// ---------- CTA block ----------
+.cta-block {
+  background: linear-gradient(135deg, $lce-marine, $lce-marine-dark);
+  color: $lce-white;
+  border-radius: 1rem;
+  padding: 3rem 2rem;
+  text-align: center;
+
+  h2 {
+    color: $lce-white;
+    font-weight: 800;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 640px;
+    margin: 1rem auto 1.75rem;
+  }
+}
+
+// ---------- Page header ----------
+.page-header {
+  background: linear-gradient(135deg, $lce-marine, $lce-marine-dark);
+  color: $lce-white;
+  padding: 4rem 0 3rem;
+
+  h1 {
+    color: $lce-white;
+    font-weight: 800;
+  }
+
+  .lead {
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 720px;
+  }
+
+  .breadcrumb {
+    margin-bottom: 1rem;
+
+    .breadcrumb-item,
+    .breadcrumb-item a {
+      color: rgba(255, 255, 255, 0.75);
+    }
+    .breadcrumb-item.active {
+      color: $lce-orange;
+    }
+    .breadcrumb-item + .breadcrumb-item::before {
+      color: rgba(255, 255, 255, 0.4);
+    }
+  }
+}
+
+// ---------- Accordion / FAQ ----------
+.accordion-lce {
+  .accordion-item {
+    border: 1px solid rgba(26, 43, 74, 0.1);
+    border-radius: 0.75rem !important;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+
+  .accordion-button {
+    font-weight: 600;
+    color: $lce-marine;
+    background-color: $lce-white;
+
+    &:not(.collapsed) {
+      color: $lce-white;
+      background-color: $lce-marine;
+      box-shadow: none;
+
+      &::after {
+        filter: brightness(0) invert(1);
+      }
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(244, 121, 32, 0.25);
+      border-color: $lce-orange;
+    }
+  }
+
+  .accordion-body {
+    background-color: $lce-sand;
+    color: $lce-marine;
+  }
+}
+
+// ---------- Bureau / Team ----------
+.bureau-card {
+  background-color: $lce-sand;
+  border-radius: 0.75rem;
+  padding: 1.75rem;
+  text-align: center;
+  height: 100%;
+
+  .bureau-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: $lce-marine;
+    color: $lce-orange;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+
+  .bureau-role {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $lce-orange;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0;
+  }
+}
+
+// ---------- Form ----------
+.form-lce {
+  background-color: $lce-sand;
+  padding: 2.5rem;
+  border-radius: 1rem;
+
+  .form-label {
+    font-weight: 600;
+    color: $lce-marine;
+  }
+
+  .form-control,
+  .form-select {
+    border: 1px solid rgba(26, 43, 74, 0.18);
+    padding: 0.65rem 0.85rem;
+
+    &:focus {
+      border-color: $lce-orange;
+      box-shadow: 0 0 0 0.2rem rgba(244, 121, 32, 0.18);
+    }
+  }
+}
+
+// ---------- News item ----------
+.news-card {
+  background-color: $lce-white;
+  border: 1px solid rgba(26, 43, 74, 0.08);
+  border-radius: 0.75rem;
+  padding: 1.75rem;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(26, 43, 74, 0.08);
+  }
+
+  .news-date {
+    font-size: 0.8rem;
+    color: $lce-orange;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  p {
+    color: rgba(26, 43, 74, 0.78);
+  }
+
+  .news-tag {
+    display: inline-block;
+    background-color: rgba(244, 121, 32, 0.12);
+    color: $lce-orange;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+// ---------- Footer ----------
+.footer-lce {
+  background-color: $lce-marine-dark;
+  color: rgba(255, 255, 255, 0.82);
+  padding: 4rem 0 1.5rem;
+
+  h5 {
+    color: $lce-white;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.85rem;
+  }
+
+  a {
+    color: rgba(255, 255, 255, 0.78);
+    text-decoration: none;
+
+    &:hover {
+      color: $lce-orange;
+    }
+  }
+
+  .footer-logo {
+    height: 56px;
+    margin-bottom: 1rem;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    margin-top: 3rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+  }
+}
+
+// ---------- Floating adherer button ----------
+.btn-float-adherer {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1030;
+  background-color: $lce-orange;
+  color: $lce-white;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(244, 121, 32, 0.38);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    background-color: $lce-orange-dark;
+    color: $lce-white;
+    transform: translateY(-2px);
+  }
+}
+
+// ---------- Utilities ----------
+.divider-orange {
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: $lce-orange;
+  border: none;
+  opacity: 1;
+  border-radius: 2px;
+  margin: 1rem 0 1.5rem;
+}
+
+.list-checked {
+  list-style: none;
+  padding-left: 0;
+
+  li {
+    position: relative;
+    padding-left: 1.75rem;
+    margin-bottom: 0.6rem;
+
+    &::before {
+      content: "\2713";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1.25rem;
+      height: 1.25rem;
+      background-color: $lce-orange;
+      color: $lce-white;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+  }
+}
