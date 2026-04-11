@@ -1,12 +1,16 @@
 {
   "name": "site-lce",
+  "description": "Site officiel du syndicat LCE — Le Clerc Entendu, syndicat indépendant des salariés du notariat de France.",
   "private": true,
+  "license": "MPL-2.0",
   "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "clean": "rm -rf dist .vite node_modules/.vite"
   },
   "devDependencies": {
     "sass-embedded": "^1.82.0",
