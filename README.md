@@ -256,4 +256,4 @@ sous-chemin (`/site-LCE/`).
 ## Contact
 
 Pour toute question sur le contenu éditorial du site :
-[lce.syndicat.fr@proton.me](mailto:lce.syndicat.fr@proton.me)
+[sg@syndicat-lce.fr](mailto:sg@syndicat-lce.fr)
