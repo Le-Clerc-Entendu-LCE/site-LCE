@@ -77,6 +77,10 @@ function buildFooter() {
             <li class="mb-2"><a href="https://www.notaires.fr" target="_blank" rel="noopener">Conseil Supérieur du Notariat</a></li>
             <li class="mb-2"><a href="mentions-legales.html">Mentions légales</a></li>
           </ul>
+          <h5>Collaboration</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="https://wdes.fr" target="_blank" rel="noopener">wdes.fr — Assistance technique</a></li>
+          </ul>
         </div>
         <div class="col-lg-3">
           <h5>Contact</h5>
