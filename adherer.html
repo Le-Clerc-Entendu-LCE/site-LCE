@@ -49,77 +49,17 @@
           </div>
 
           <div class="col-lg-7">
-            <form class="form-lce" onsubmit="return false;" novalidate>
-              <h3 class="h4 fw-bold mb-1">Bulletin d'adhésion en ligne</h3>
+            <div class="form-lce">
+              <h3 class="h4 fw-bold mb-1">Téléchargez votre bulletin d'adhésion</h3>
               <hr class="divider-orange">
+              <p>Remplissez le bulletin PDF directement sur votre ordinateur ou imprimez-le pour le compléter à la main, puis renvoyez-le par email à <a href="mailto:lce.syndicat.fr@proton.me">lce.syndicat.fr@proton.me</a>.</p>
 
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <label for="f-nom" class="form-label">Nom *</label>
-                  <input type="text" class="form-control" id="f-nom" required>
-                </div>
-                <div class="col-md-6">
-                  <label for="f-prenom" class="form-label">Prénom *</label>
-                  <input type="text" class="form-control" id="f-prenom" required>
-                </div>
-
-                <div class="col-md-6">
-                  <label for="f-email" class="form-label">Email *</label>
-                  <input type="email" class="form-control" id="f-email" required>
-                </div>
-                <div class="col-md-6">
-                  <label for="f-tel" class="form-label">Téléphone</label>
-                  <input type="tel" class="form-control" id="f-tel">
-                </div>
-
-                <div class="col-md-8">
-                  <label for="f-office" class="form-label">Office notarial employeur *</label>
-                  <input type="text" class="form-control" id="f-office" required>
-                </div>
-                <div class="col-md-4">
-                  <label for="f-ville" class="form-label">Ville *</label>
-                  <input type="text" class="form-control" id="f-ville" required>
-                </div>
-
-                <div class="col-md-6">
-                  <label for="f-contrat" class="form-label">Type de contrat *</label>
-                  <select class="form-select" id="f-contrat" required>
-                    <option value="">Choisissez...</option>
-                    <option>CDI</option>
-                    <option>CDD</option>
-                    <option>Apprentissage</option>
-                    <option>Intérim</option>
-                    <option>Congé parental</option>
-                    <option>Demandeur d'emploi</option>
-                    <option>Autre</option>
-                  </select>
-                </div>
-                <div class="col-md-6">
-                  <label for="f-fonction" class="form-label">Fonction *</label>
-                  <input type="text" class="form-control" id="f-fonction" placeholder="Clerc, formaliste, comptable..." required>
-                </div>
-
-                <div class="col-12">
-                  <label for="f-cotisation" class="form-label">Montant de cotisation souhaité (€) *</label>
-                  <input type="number" class="form-control" id="f-cotisation" min="0" step="1" required>
-                  <div class="form-text">Cotisation libre. Rappel&nbsp;: 66&nbsp;% sont déductibles de votre impôt sur le revenu.</div>
-                </div>
-
-                <div class="col-12">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="f-rgpd" required>
-                    <label class="form-check-label small" for="f-rgpd">
-                      J'accepte que mes données soient utilisées pour traiter mon adhésion, conformément à la politique de confidentialité de LCE (RGPD).
-                    </label>
-                  </div>
-                </div>
-
-                <div class="col-12 d-flex flex-wrap gap-3 mt-2">
-                  <button type="submit" class="btn btn-primary btn-lg px-4">Envoyer mon adhésion</button>
-                  <a href="#" class="btn btn-outline-secondary btn-lg">Télécharger le bulletin PDF</a>
-                </div>
+              <div class="d-flex flex-column gap-3 mt-4">
+                <a href="bulletin-adhesion-LCE-remplissable.pdf" download class="btn btn-primary btn-lg">Bulletin PDF remplissable</a>
+                <a href="bulletin-adhesion-LCE.pdf" download class="btn btn-outline-secondary btn-lg">Bulletin PDF imprimable</a>
+                <a href="statuts-LCE.pdf" download class="btn btn-outline-secondary btn-lg">Statuts du syndicat</a>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
