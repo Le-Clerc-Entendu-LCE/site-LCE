@@ -22,7 +22,7 @@ function buildNavbar(activeKey) {
   <nav class="navbar navbar-expand-lg navbar-lce fixed-top">
     <div class="container">
       <a class="navbar-brand" href="index.html">
-        <img src="${logoUrl}" alt="Logo LCE">
+        <img src="${logoUrl}" alt="Logo LCE" width="44" height="44">
         <span class="brand-text">
           <span class="brand-main">LE CLERC ENTENDU</span>
           <span class="brand-sub">Syndicat des salariés du notariat</span>
@@ -52,7 +52,7 @@ function buildFooter() {
     <div class="container">
       <div class="row g-4">
         <div class="col-lg-4">
-          <img src="${logoUrl}" alt="Logo LCE" class="footer-logo">
+          <img src="${logoUrl}" alt="Logo LCE" class="footer-logo" loading="lazy" width="56" height="56">
           <p class="mb-3"><strong class="text-white">LE CLERC ENTENDU</strong><br>
           Syndicat des Salariés du Notariat de France</p>
           <p class="mb-0 small">Syndicat professionnel indépendant, sans
