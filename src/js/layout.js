@@ -5,6 +5,7 @@ const NAV_LINKS = [
   { href: 'index.html', label: 'Accueil', key: 'accueil' },
   { href: 'qui-sommes-nous.html', label: 'Qui sommes-nous', key: 'qui' },
   { href: 'vos-droits.html', label: 'Vos droits', key: 'droits' },
+  { href: 'metier-clerc-notaire.html', label: 'Le métier', key: 'metier' },
   { href: 'actualites.html', label: 'Actualités', key: 'actualites' },
   { href: 'contact.html', label: 'Contact', key: 'contact' },
 ];
@@ -64,6 +65,7 @@ function buildFooter() {
             <li class="mb-2"><a href="index.html">Accueil</a></li>
             <li class="mb-2"><a href="qui-sommes-nous.html">Qui sommes-nous</a></li>
             <li class="mb-2"><a href="vos-droits.html">Vos droits</a></li>
+            <li class="mb-2"><a href="metier-clerc-notaire.html">Le métier</a></li>
             <li class="mb-2"><a href="actualites.html">Actualités</a></li>
             <li class="mb-2"><a href="adherer.html">Adhérer</a></li>
             <li class="mb-2"><a href="contact.html">Contact</a></li>
