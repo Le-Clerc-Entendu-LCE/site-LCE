@@ -88,6 +88,8 @@ function buildFooter() {
           <h5>Contact</h5>
           <p class="mb-2"><strong class="text-white">Siège social</strong><br>
           15 Place Stenfort<br>56110 GOURIN (Morbihan)</p>
+          <p class="mb-2"><strong class="text-white">SIRET</strong><br>
+          104&nbsp;691&nbsp;696&nbsp;00017</p>
           <p class="mb-0"><strong class="text-white">Email</strong><br>
           <a href="mailto:sg@syndicat-lce.fr">sg@syndicat-lce.fr</a></p>
         </div>
