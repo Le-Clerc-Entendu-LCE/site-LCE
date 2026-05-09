@@ -10,3 +10,13 @@ dist/
 
 # FUSE leftover files from the bind mount
 .fuse_hidden*
+
+# Stray office documents dropped at the root by the user
+*.odt
+*.docx
+*.doc
+.~lock.*#
+
+# Stray PNGs at the root (the website assets live in public/ only)
+/*.png
+!public/*.png
