@@ -68,6 +68,7 @@ function buildFooter() {
             <li class="mb-2"><a href="metier-clerc-notaire.html">Le métier</a></li>
             <li class="mb-2"><a href="actualites.html">Actualités</a></li>
             <li class="mb-2"><a href="adherer.html">Adhérer</a></li>
+            <li class="mb-2"><a href="rejoindre.html">Recevoir le flyer</a></li>
             <li class="mb-2"><a href="contact.html">Contact</a></li>
           </ul>
         </div>

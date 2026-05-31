@@ -33,6 +33,7 @@ LCE — Le Clerc Entendu représente les clercs, formalistes, secrétaires, assi
 - [Le métier de clerc de notaire](https://syndicat-lce.fr/metier-clerc-notaire.html) : fiche métier rédacteur d'actes — niveaux junior/confirmé/expert, évolution
 - [Actualités](https://syndicat-lce.fr/actualites.html) : vie syndicale et négociations de branche
 - [Adhérer](https://syndicat-lce.fr/adherer.html) : bulletin d'adhésion PDF remplissable, statuts du syndicat
+- [Recevoir le flyer](https://syndicat-lce.fr/rejoindre.html) : inscription opt-in à la liste de diffusion (envoi du flyer et des communications syndicales)
 - [Contact](https://syndicat-lce.fr/contact.html) : coordonnées et page LinkedIn
 - [Mentions légales](https://syndicat-lce.fr/mentions-legales.html) : éditeur, hébergement, RGPD
 

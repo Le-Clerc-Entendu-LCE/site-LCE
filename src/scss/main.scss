@@ -474,6 +474,82 @@ body {
   }
 }
 
+// ---------- Landing page (opt-in) ----------
+.landing-hero {
+  background: linear-gradient(
+    135deg,
+    $lce-marine 0%,
+    $lce-marine-dark 100%
+  );
+  color: $lce-white;
+  padding: 5rem 0 5rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 380px;
+    height: 380px;
+    background: $lce-orange;
+    opacity: 0.10;
+    border-radius: 50%;
+    filter: blur(8px);
+  }
+
+  h1 {
+    color: $lce-white;
+    font-size: clamp(1.85rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-kicker {
+    display: inline-block;
+    background: rgba(244, 121, 32, 0.18);
+    color: $lce-orange;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-lead {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 1.25rem;
+  }
+
+  .list-checked li {
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .text-muted {
+    color: rgba(255, 255, 255, 0.65) !important;
+  }
+
+  .form-lce {
+    background-color: $lce-white;
+    position: relative;
+    z-index: 1;
+
+    .form-label {
+      color: $lce-marine;
+    }
+
+    a {
+      color: $lce-orange;
+      &:hover { color: $lce-orange-dark; }
+    }
+  }
+}
+
 // ---------- Footer ----------
 .footer-lce {
   background-color: $lce-marine-dark;
