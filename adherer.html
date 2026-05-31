@@ -86,15 +86,24 @@
 
           <div class="col-lg-7">
             <div class="form-lce">
-              <h3 class="h4 fw-bold mb-1">Téléchargez votre bulletin d'adhésion</h3>
+              <h3 class="h4 fw-bold mb-1">Formulaire d'adhésion en ligne</h3>
               <hr class="divider-orange">
-              <p>Remplissez le bulletin PDF directement sur votre ordinateur ou imprimez-le pour le compléter à la main, puis renvoyez-le par email à <a href="mailto:sg@syndicat-lce.fr">sg@syndicat-lce.fr</a>.</p>
 
-              <div class="d-flex flex-column gap-3 mt-4">
-                <a href="bulletin-adhesion-LCE-remplissable.pdf" download class="btn btn-primary btn-lg">Bulletin PDF remplissable</a>
-                <a href="bulletin-adhesion-LCE.pdf" download class="btn btn-outline-secondary btn-lg">Bulletin PDF imprimable</a>
-                <a href="statuts-LCE.pdf" download class="btn btn-outline-secondary btn-lg">Statuts du syndicat</a>
-              </div>
+              <div
+                data-mounch-form="bulletin-dadhesion-a-lce"
+                data-mounch-lang="fr"
+              ></div>
+              <script type="module" src="https://mounch.wdes.eu/widget/mounch-form.js"></script>
+
+              <details class="mt-4">
+                <summary class="text-muted small">Vous préférez le format papier&nbsp;?</summary>
+                <p class="mt-3">Remplissez le bulletin PDF directement sur votre ordinateur ou imprimez-le pour le compléter à la main, puis renvoyez-le par email à <a href="mailto:sg@syndicat-lce.fr">sg@syndicat-lce.fr</a>.</p>
+                <div class="d-flex flex-column gap-3 mt-3">
+                  <a href="bulletin-adhesion-LCE-remplissable.pdf" download class="btn btn-outline-secondary btn-lg">Bulletin PDF remplissable</a>
+                  <a href="bulletin-adhesion-LCE.pdf" download class="btn btn-outline-secondary btn-lg">Bulletin PDF imprimable</a>
+                  <a href="statuts-LCE.pdf" download class="btn btn-outline-secondary btn-lg">Statuts du syndicat</a>
+                </div>
+              </details>
             </div>
           </div>
         </div>
