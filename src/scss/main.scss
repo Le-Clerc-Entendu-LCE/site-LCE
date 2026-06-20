@@ -536,8 +536,17 @@ body {
 
   .form-lce {
     background-color: $lce-white;
+    color: $lce-marine;
     position: relative;
     z-index: 1;
+
+    h1, h2, h3, h4, h5, h6, p, label, span, button {
+      color: $lce-marine;
+    }
+
+    .text-muted {
+      color: rgba(26, 43, 74, 0.7) !important;
+    }
 
     .form-label {
       color: $lce-marine;

@@ -75,49 +75,15 @@
               <hr class="divider-orange">
               <p class="small mb-4">Indiquez votre email&nbsp;: vous recevrez un email de confirmation, puis le flyer LCE en pièce jointe.</p>
 
-              <form id="optin-form" onsubmit="return submitOptin(event);" novalidate>
-                <div class="mb-3">
-                  <label for="r-email" class="form-label">Adresse email <span class="text-orange">*</span></label>
-                  <input type="email" class="form-control form-control-lg" id="r-email" name="email" required placeholder="prenom.nom@exemple.fr" autocomplete="email">
-                </div>
+              <div
+                data-mounch-form="recevoir-le-flyer-lce"
+                data-mounch-lang="fr"
+              ></div>
+              <script type="module" src="https://mounch.wdes.eu/widget/mounch-form.js"></script>
 
-                <div class="row g-3 mb-3">
-                  <div class="col-md-6">
-                    <label for="r-prenom" class="form-label">Prénom</label>
-                    <input type="text" class="form-control" id="r-prenom" name="prenom" autocomplete="given-name">
-                  </div>
-                  <div class="col-md-6">
-                    <label for="r-region" class="form-label">Région d'exercice</label>
-                    <input type="text" class="form-control" id="r-region" name="region" placeholder="Bretagne, Île-de-France…">
-                  </div>
-                </div>
-
-                <div class="form-check mb-3">
-                  <input class="form-check-input" type="checkbox" id="r-consent" required>
-                  <label class="form-check-label small" for="r-consent">
-                    J'accepte que LE CLERC ENTENDU (LCE) collecte mon adresse email pour m'envoyer le flyer de présentation et ses prochaines communications syndicales. Je peux me désinscrire à tout moment via le lien présent dans chaque email. <a href="mentions-legales.html#mailing-list">En savoir plus</a>.
-                  </label>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-lg w-100">
-                  Recevoir le flyer
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-left:6px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </button>
-
-                <p class="small text-muted text-center mt-3 mb-0">
-                  Pas de spam. Pas de revente. Vos données ne sortent pas du syndicat.
-                </p>
-              </form>
-
-              <!-- État de confirmation (caché par défaut) -->
-              <div id="optin-success" style="display:none;" class="text-center">
-                <div style="width:72px;height:72px;background:rgba(40,167,69,0.12);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <h3 class="h5 fw-bold text-marine">Merci pour votre inscription&nbsp;!</h3>
-                <p class="small">Un email de confirmation va vous être envoyé. <strong>Cliquez sur le lien</strong> qu'il contient pour valider votre demande et recevoir le flyer LCE.</p>
-                <p class="small text-muted mb-0">Pensez à vérifier votre dossier de courrier indésirable.</p>
-              </div>
+              <p class="small text-muted text-center mt-3 mb-0">
+                Pas de spam. Pas de revente. Vos données ne sortent pas du syndicat. <a href="mentions-legales.html#mailing-list">En savoir plus</a>.
+              </p>
 
             </div>
           </div>
@@ -237,26 +203,6 @@
 
   <div id="lce-footer"></div>
   <div id="lce-floating"></div>
-
-  <script>
-    // Mockup uniquement — pas de soumission vers un service tiers
-    function submitOptin(e) {
-      e.preventDefault();
-      const form = document.getElementById('optin-form');
-      const success = document.getElementById('optin-success');
-      // Validation simple
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return false;
-      }
-      // Affichage du message de confirmation
-      form.style.display = 'none';
-      success.style.display = 'block';
-      // Scroll doux vers la confirmation
-      document.getElementById('optin-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return false;
-    }
-  </script>
 
   <script type="module" src="/src/js/main.js"></script>
 </body>
