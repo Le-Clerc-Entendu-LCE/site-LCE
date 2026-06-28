@@ -27,6 +27,7 @@ export default defineConfig({
         metier: resolve(__dirname, 'metier-clerc-notaire.html'),
         actualites: resolve(__dirname, 'actualites.html'),
         adherer: resolve(__dirname, 'adherer.html'),
+        cotisation: resolve(__dirname, 'cotisation.html'),
         rejoindre: resolve(__dirname, 'rejoindre.html'),
         contact: resolve(__dirname, 'contact.html'),
         mentions: resolve(__dirname, 'mentions-legales.html'),
