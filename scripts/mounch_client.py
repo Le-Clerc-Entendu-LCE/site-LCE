@@ -15,7 +15,7 @@ import json
 import urllib.request
 import urllib.error
 
-USER_AGENT = "LCE-Syndicat-Integrator/1.0 (+https://syndicat-lce.fr; sg@syndicat-lce.fr)"
+USER_AGENT = "LCE-Syndicat-Integrator/1.0 (+https://syndicat-lce.fr)"
 BASE = "https://api.mounch.wdes.eu/api"
 
 
