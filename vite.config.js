@@ -31,6 +31,7 @@ export default defineConfig({
         rejoindre: resolve(__dirname, 'rejoindre.html'),
         contact: resolve(__dirname, 'contact.html'),
         mentions: resolve(__dirname, 'mentions-legales.html'),
+        plan: resolve(__dirname, 'plan-du-site.html'),
       },
     },
   },
