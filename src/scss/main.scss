@@ -429,6 +429,35 @@ body {
   }
 }
 
+// ---------- Lien d'évitement (accessibilité clavier) ----------
+// Hors écran par défaut, il apparaît en haut à gauche dès qu'il reçoit le focus.
+// On évite display:none / visibility:hidden, qui le rendraient infocusable.
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 2000;
+  padding: 0.75rem 1.25rem;
+  background-color: $lce-marine;
+  color: $lce-white;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 0.5rem 0;
+
+  &:focus,
+  &:focus-visible {
+    left: 0;
+    color: $lce-white;
+    outline: 3px solid $lce-orange;
+    outline-offset: 2px;
+  }
+}
+
+// La cible du lien d'évitement ne doit pas afficher de contour permanent.
+main:focus {
+  outline: none;
+}
+
 // ---------- News item ----------
 .news-card {
   background-color: $lce-white;
@@ -460,18 +489,19 @@ body {
   p {
     color: rgba(26, 43, 74, 0.78);
   }
+}
 
-  .news-tag {
-    display: inline-block;
-    background-color: rgba(244, 121, 32, 0.12);
-    color: $lce-orange;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.7rem;
-    border-radius: 999px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
+// Utilisable hors .news-card (ex. section série pédagogique sur actualites.html)
+.news-tag {
+  display: inline-block;
+  background-color: rgba(244, 121, 32, 0.12);
+  color: $lce-orange;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 // ---------- Landing page (opt-in) ----------

@@ -122,9 +122,24 @@ function buildFloatingButton(activeKey) {
   return `<a class="btn-float-adherer" href="adherer.html">Adhérer &rarr;</a>`;
 }
 
+// Lien d'évitement : premier élément focusable de la page, il permet de sauter
+// la navigation pour aller directement au contenu (utilisateurs clavier et lecteurs
+// d'écran). Invisible tant qu'il n'a pas le focus.
+function buildSkipLink() {
+  return '<a class="skip-link" href="#contenu">Aller au contenu principal</a>';
+}
+
 export function mountLayout(activeKey = '') {
   const navSlot = document.getElementById('lce-nav');
-  if (navSlot) navSlot.innerHTML = buildNavbar(activeKey);
+  if (navSlot) navSlot.innerHTML = buildSkipLink() + buildNavbar(activeKey);
+
+  // Cible du lien d'évitement. tabindex="-1" rend le <main> focusable par programme
+  // sans l'insérer dans l'ordre de tabulation.
+  const main = document.querySelector('main');
+  if (main && !main.id) {
+    main.id = 'contenu';
+    main.setAttribute('tabindex', '-1');
+  }
 
   const footerSlot = document.getElementById('lce-footer');
   if (footerSlot) footerSlot.innerHTML = buildFooter();
