@@ -180,7 +180,7 @@ def append_member_row(ws, numero: int, nom: str, prenom: str, mobile: str, email
         dt.datetime(date_adhesion.year, date_adhesion.month, date_adhesion.day) if date_adhesion else None,
         "actif",
         None,
-        "membre ",
+        "membre",
         profession or "",
     ]
     for c, value in enumerate(values, start=1):
