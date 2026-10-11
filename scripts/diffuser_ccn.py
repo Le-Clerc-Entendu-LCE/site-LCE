@@ -21,7 +21,7 @@ Workflow miroir de la veille (id 18) : id 28.
 import argparse
 import sys
 
-from mounch_client import call
+from mounch_client import call, controler_cotisations
 
 SLUG = "diffusion-serie-pedagogique-ccn"
 
@@ -44,6 +44,11 @@ def main():
     if payload_bytes > 60000:
         print(f"HTML trop volumineux : {payload_bytes} octets (limite Mounch ≈ 65 535).")
         print("Réduisez la taille (logos base64, images externes, minifier) avant de relancer.")
+        sys.exit(1)
+
+    # Les adhérents n'ayant pas réglé leur cotisation figurent toujours dans la
+    # liste de diffusion (pas de filtre côté workflow). On les signale.
+    if controler_cotisations():
         sys.exit(1)
 
     status, body = call("POST", f"/public/forms/{SLUG}/start")
