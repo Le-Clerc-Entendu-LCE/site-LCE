@@ -154,6 +154,32 @@ la règle uniforme : contrôler la fiche après écriture.
 **Après toute écriture sur une fiche, la relire** et vérifier téléphone, notes, adresse et
 coordonnées.
 
+### Script `sync_registre_membres.py`
+
+Aligne le **registre Excel** sur les adhésions Mounch : ajoute la ligne des membres présents dans
+Mounch mais absents du registre, et met à jour leurs notes de contact.
+
+```bash
+python3 scripts/sync_registre_membres.py          # simulation (défaut) — n'écrit rien
+python3 scripts/sync_registre_membres.py --apply  # écrit, après sauvegarde automatique
+```
+
+- **Idempotent** : relancé, il ne fait rien s'il n'y a pas de ligne manquante.
+- **Sauvegarde automatique** avant écriture (`.avant-sync-AAAAAMMJJ.xlsx`).
+- **Périmètre limité** : il ne synchronise **que les lignes manquantes**. Il ne corrige **ni les
+  dates d'adhésion, ni le statut de cotisation** — un écart sur ces champs doit être corrigé à la
+  main, dans Mounch d'abord. Vérifier l'alignement registre ↔ Mounch de temps à autre (un contrôle
+  champ par champ prend quelques minutes et a déjà révélé une date d'adhésion fausse).
+
+### Cotisations — règle absolue
+
+**Une cotisation marquée payée est définitive.** Ne jamais poser `paidAt`/`method` sans
+**instruction explicite de Bernard adossée au relevé bancaire** (date de crédit + moyen). En cas
+d'erreur de saisie, la seule issue est un correctif en base par William.
+
+Convention de saisie : `fiscalYearId` 23 pour l'exercice 2026 (24 pour 2027),
+`amountExclTax 0` / `amountInclTax 10`, libellé en compta 7561.
+
 ---
 
 ## 6. Pièges connus (Mounch)
