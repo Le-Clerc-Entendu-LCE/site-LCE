@@ -65,6 +65,7 @@ function buildFooter() {
             <li class="mb-2"><a href="index.html">Accueil</a></li>
             <li class="mb-2"><a href="qui-sommes-nous.html">Qui sommes-nous</a></li>
             <li class="mb-2"><a href="vos-droits.html">Vos droits</a></li>
+            <li class="mb-2"><a href="section-syndicale.html">Créer une section syndicale</a></li>
             <li class="mb-2"><a href="metier-clerc-notaire.html">Le métier</a></li>
             <li class="mb-2"><a href="actualites.html">Actualités</a></li>
             <li class="mb-2"><a href="adherer.html">Adhérer</a></li>

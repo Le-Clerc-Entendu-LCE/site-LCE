@@ -24,6 +24,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         qui: resolve(__dirname, 'qui-sommes-nous.html'),
         droits: resolve(__dirname, 'vos-droits.html'),
+        section: resolve(__dirname, 'section-syndicale.html'),
         metier: resolve(__dirname, 'metier-clerc-notaire.html'),
         actualites: resolve(__dirname, 'actualites.html'),
         adherer: resolve(__dirname, 'adherer.html'),
