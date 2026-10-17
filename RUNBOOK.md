@@ -297,6 +297,22 @@ Les dumps **globaux** sont volumineux (~173 et ~260 Mo) et **datés** ; les dump
 `WebFetch` **atteint** Légifrance pour lire une page HTML précise, même quand `curl` est bloqué :
 c'est le repli pour vérifier un article isolé.
 
+### Documents PDF générés
+
+- `scripts/generate-bulletin.py` → `public/bulletin-adhesion-LCE.pdf` (bulletin d'adhésion)
+- `scripts/generate-kit-cse.py` → `public/kit-elections-cse-LCE.pdf` (kit « Élections du CSE »,
+  A4 recto-verso). Téléchargeable depuis `vos-droits.html`, `section-syndicale.html` et le pied de
+  page, rubrique « Liens utiles » (`src/js/layout.js`) — donc depuis toutes les pages.
+
+Regénérer après toute modification de contenu, puis vérifier que `pdfinfo` annonce **2 pages** :
+
+```bash
+python3 scripts/generate-kit-cse.py
+pdfinfo public/kit-elections-cse-LCE.pdf | grep Pages
+```
+
+---
+
 ### Veille — accès aux sources
 
 Certaines sources sont protégées. `browserget` sert de repli (allowlist par `@connect`), mais il
