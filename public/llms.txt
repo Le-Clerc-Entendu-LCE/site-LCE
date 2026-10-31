@@ -43,7 +43,9 @@ LCE — Le Clerc Entendu représente les clercs, formalistes, secrétaires, assi
 - [Adhérer](https://syndicat-lce.fr/adherer.html) : bulletin d'adhésion PDF remplissable, statuts du syndicat
 - [Recevoir le flyer](https://syndicat-lce.fr/rejoindre.html) : inscription opt-in à la liste de diffusion (envoi du flyer et des communications syndicales)
 - [Contact](https://syndicat-lce.fr/contact.html) : coordonnées et page LinkedIn
+- [Cotisation](https://syndicat-lce.fr/cotisation.html) : montant de la cotisation annuelle et IBAN officiel du syndicat
 - [Mentions légales](https://syndicat-lce.fr/mentions-legales.html) : éditeur, hébergement, RGPD
+- [Plan du site](https://syndicat-lce.fr/plan-du-site.html) : index lisible de toutes les pages
 
 ## Documents téléchargeables
 
@@ -74,4 +76,4 @@ Le notariat français emploie environ 55 000 salariés (clercs, formalistes, sec
 
 ## Mise à jour
 
-Dernière révision : 2026-05-17
+Dernière révision : 2026-10-31
