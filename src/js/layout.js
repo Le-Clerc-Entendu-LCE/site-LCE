@@ -5,18 +5,40 @@ const NAV_LINKS = [
   { href: 'index.html', label: 'Accueil', key: 'accueil' },
   { href: 'qui-sommes-nous.html', label: 'Qui sommes-nous', key: 'qui' },
   { href: 'vos-droits.html', label: 'Vos droits', key: 'droits' },
-  { href: 'metier-clerc-notaire.html', label: 'Le métier', key: 'metier' },
+  {
+    label: 'Le métier',
+    key: 'metier',
+    children: [
+      { href: 'metier-clerc-notaire.html', label: 'Clerc de notaire' },
+      { href: 'metier-comptable-taxateur.html', label: 'Comptable taxateur' },
+    ],
+  },
   { href: 'actualites.html', label: 'Actualités', key: 'actualites' },
   { href: 'contact.html', label: 'Contact', key: 'contact' },
 ];
 
 function buildNavbar(activeKey) {
-  const links = NAV_LINKS.map(
-    (l) =>
-      `<li class="nav-item"><a class="nav-link${
-        l.key === activeKey ? ' active' : ''
-      }" href="${l.href}">${l.label}</a></li>`
-  ).join('');
+  const links = NAV_LINKS.map((l) => {
+    if (l.children) {
+      const items = l.children
+        .map(
+          (c) =>
+            `<li><a class="dropdown-item" href="${c.href}">${c.label}</a></li>`
+        )
+        .join('');
+      return `
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle${
+            l.key === activeKey ? ' active' : ''
+          }" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">${l.label}</a>
+          <ul class="dropdown-menu">${items}</ul>
+        </li>`;
+    }
+    return `<li class="nav-item"><a class="nav-link${
+      l.key === activeKey ? ' active' : ''
+    }" href="${l.href}">${l.label}</a></li>`;
+  }).join('');
 
   return `
   <nav class="navbar navbar-expand-lg navbar-lce fixed-top">
@@ -66,7 +88,8 @@ function buildFooter() {
             <li class="mb-2"><a href="qui-sommes-nous.html">Qui sommes-nous</a></li>
             <li class="mb-2"><a href="vos-droits.html">Vos droits</a></li>
             <li class="mb-2"><a href="section-syndicale.html">Créer une section syndicale</a></li>
-            <li class="mb-2"><a href="metier-clerc-notaire.html">Le métier</a></li>
+            <li class="mb-2"><a href="metier-clerc-notaire.html">Clerc de notaire</a></li>
+            <li class="mb-2"><a href="metier-comptable-taxateur.html">Comptable taxateur</a></li>
             <li class="mb-2"><a href="actualites.html">Actualités</a></li>
             <li class="mb-2"><a href="adherer.html">Adhérer</a></li>
             <li class="mb-2"><a href="rejoindre.html">Recevoir le flyer</a></li>

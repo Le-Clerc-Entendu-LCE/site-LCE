@@ -100,6 +100,40 @@ body {
     }
   }
 
+  .dropdown-menu {
+    background-color: $lce-marine;
+    border: 0;
+    border-radius: 0.5rem;
+    padding: 0.35rem 0;
+    margin-top: 0.35rem;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  }
+
+  .dropdown-item {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    padding: 0.5rem 1.15rem;
+
+    &:hover,
+    &:focus {
+      background-color: rgba(255, 255, 255, 0.08);
+      color: $lce-orange;
+    }
+  }
+
+  // Sur mobile, le menu est déplié dans la colonne : pas d'ombre ni de fond flottant.
+  @media (max-width: 991.98px) {
+    .dropdown-menu {
+      background-color: rgba(255, 255, 255, 0.06);
+      box-shadow: none;
+      margin-top: 0;
+      margin-bottom: 0.25rem;
+    }
+    .dropdown-item {
+      padding-left: 1.75rem;
+    }
+  }
+
   .navbar-toggler {
     border-color: rgba(255, 255, 255, 0.3);
     &:focus {
