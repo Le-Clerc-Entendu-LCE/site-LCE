@@ -26,6 +26,7 @@ export default defineConfig({
         droits: resolve(__dirname, 'vos-droits.html'),
         section: resolve(__dirname, 'section-syndicale.html'),
         metier: resolve(__dirname, 'metier-clerc-notaire.html'),
+        comptable: resolve(__dirname, 'metier-comptable-taxateur.html'),
         actualites: resolve(__dirname, 'actualites.html'),
         adherer: resolve(__dirname, 'adherer.html'),
         cotisation: resolve(__dirname, 'cotisation.html'),
