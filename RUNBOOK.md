@@ -70,7 +70,7 @@ Les deux diffusions (CCN et veille) partagent la même mécanique :
 
 ```bash
 # Série CCN
-cd /mnt/Documents/Documents/LCE_SYNDICAT/site-LCE
+cd /mnt/Documents/Documents/20 - SYNDICAT LCE/site-LCE
 python3 scripts/diffuser_ccn.py --sujet "LCE — <titre du post>" \
   ../Communication/Post{NN}/email_membres.html
 
@@ -179,6 +179,42 @@ d'erreur de saisie, la seule issue est un correctif en base par William.
 
 Convention de saisie : `fiscalYearId` 23 pour l'exercice 2026 (24 pour 2027),
 `amountExclTax 0` / `amountInclTax 10`, libellé en compta 7561.
+
+### Quittances de cotisation — script `emettre_quittances.py`
+
+> Mode opératoire complet (règles de remplissage, rééditions, changement d'exercice,
+> checklist) : `Documents-SIREN-bulletin_adhésion_etc/quittances_cotisations_2026/MODE_OPERATOIRE_quittances.md`.
+
+Les reçus annuels partent d'un **PDF remplissable** :
+`Documents-SIREN-bulletin_adhésion_etc/quittances_cotisations_2026/Recu_cotisation_Le_Clerc_Entendu.pdf`
+(14 champs AcroForm). Le script le remplit, l'aplatit (Ghostscript) et le dépose dans le même
+dossier sous `{Initiales}_Recu_cotisation_Le_Clerc_Entendu.pdf`.
+
+```bash
+python3 scripts/emettre_quittances.py                  # simulation (défaut)
+python3 scripts/emettre_quittances.py --apply          # émet les quittances manquantes
+python3 scripts/emettre_quittances.py --membre 26 --apply
+```
+
+- **Source** : Mounch — seulement les cotisations `isPaid` de l'exercice (`fiscalYearId` 23).
+  Ne jamais émettre depuis le registre Excel : Mounch fait foi.
+- **Idempotent** : registre `registre_quittances.csv` dans le dossier des quittances ; au premier
+  lancement il est amorcé en relisant les PDF existants. Le rapprochement se fait **par le nom**
+  (les anciens « N° d'adhérent » imprimés comportent des erreurs : BELDI 009 au lieu de 4,
+  COUE 017 au lieu de 12…).
+- **Numérotation** : 01 → 024 émises ; **doublon 013** (PLM et RLD) et **trou 007**. Rééditions :
+  **025** (LE MEUR, annule et remplace le 013) et **026** (LARUE). Prochain numéro : **027**.
+  Ne pas renuméroter l'existant (pièces comptables).
+- **Réédition** : `--remplace ADHERENT` — l'ancienne quittance (retrouvée par le nom ou les
+  initiales) est renommée `….annule-nXXX.pdf`, marquée `annule` au registre, et la nouvelle porte
+  la mention « Annule et remplace le reçu n° XXX. » incrustée en bas de page. Les fichiers
+  `.annule` sont ignorés par le rapprochement.
+- **Garde-fous** : refuse d'émettre si l'adresse manque (repli sur le formulaire d'adhésion) ;
+  signale une quittance incomplète aux mêmes initiales ; le champ signature reste **vide** comme
+  sur les quittances existantes.
+- **Envoi** : Mounch ne sait pas joindre de PDF (étape `email` sans `attachments`). Le script
+  prépare le fichier ; l'envoi reste manuel tant que la demande à William n'est pas livrée
+  (voir §11 ou mémoire `quittances-cotisations`).
 
 ---
 
