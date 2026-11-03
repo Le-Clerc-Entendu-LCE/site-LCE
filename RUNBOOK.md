@@ -285,6 +285,24 @@ smtplib.SMTP('smtp.ethereal.email', 587) → starttls() → login(user, pass)
 c'est que le post a été préparé et relu : le brouillon peut contenir des corrections issues de la
 relecture du texte conventionnel, absentes de la feuille Excel.
 
+### Deux publics, deux listes
+
+| Public | Source | Ce qu'il reçoit | État |
+|---|---|---|---|
+| **Adhérents** | `list_association_members` (workflows 18 et 28) | veille + série CCN | opérationnel |
+| **Sympathisants** | formulaires 17 (`recevoir-le-flyer-lce`) et 35 (`recevoir-la-serie-pedagogique-ccn`) | **série CCN seulement** | **bloqué** : Mounch ne sait pas lister les soumissions |
+
+- L'étape native **`list_form_submissions`** (miroir de `list_association_members`) est demandée à
+  William le 03/11/2026 ; spécification dans
+  `cahiers_ces_charges_Claude_et_notes_fichiers_md/2026-11-03_demande_native_listes_diffusion_Mounch.md`.
+- **En attendant, ne pas envoyer la série aux sympathisants** et ne pas promettre de lien de
+  désinscription ni de double opt-in : aucun des deux n'existe. La désinscription se fait par
+  réponse à l'e-mail.
+- **Accusés** : workflow **10** (form 17, avec bouton de téléchargement du flyer) et workflow
+  **30** (form 35). Le flyer est servi sur `https://syndicat-lce.fr/flyer-LCE.pdf`
+  (source `Flyer_images_et_pdf/2026-05-flyer_LCE.pdf`, à recopier dans `public/` à chaque
+  nouvelle version).
+
 ### Règles de rédaction
 
 - **Ne jamais citer une durée ou un montant de mémoire.** Ouvrir l'article dans
