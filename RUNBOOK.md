@@ -295,9 +295,22 @@ relecture du texte conventionnel, absentes de la feuille Excel.
 - L'étape native **`list_form_submissions`** (miroir de `list_association_members`) est demandée à
   William le 03/11/2026 ; spécification dans
   `cahiers_ces_charges_Claude_et_notes_fichiers_md/2026-11-03_demande_native_listes_diffusion_Mounch.md`.
-- **En attendant, ne pas envoyer la série aux sympathisants** et ne pas promettre de lien de
-  désinscription ni de double opt-in : aucun des deux n'existe. La désinscription se fait par
-  réponse à l'e-mail.
+- **En attendant, ne pas promettre de lien de désinscription ni de double opt-in** : aucun des deux
+  n'existe. La désinscription se fait par réponse à l'e-mail.
+
+#### 🔧 Contournement en place : `thiange@wanadoo.fr` en dur dans le Cci
+
+Un inscrit du 27/09/2026 (`thiange@wanadoo.fr`) attend la série depuis le 03/11/2026, date à
+laquelle il a reçu un e-mail de rattrapage annonçant le premier épisode **lundi 9 novembre**.
+
+- L'étape **176** du workflow 28 porte désormais :
+  `bcc = thiange@wanadoo.fr, {{ steps.175.csv }}, Syndicat LCE SGA <sga@syndicat-lce.fr>`
+- **À retirer** dès que `list_form_submissions` est disponible, et **immédiatement** si cette
+  personne se désinscrit.
+- Toute nouvelle inscription à la série avant la livraison native **n'est pas couverte** : elle
+  reçoit son accusé (workflow 30) mais aucun épisode. Vérifier `GET /form-templates/35/submissions`
+  avant chaque envoi, et ajouter les nouvelles adresses de la même façon ou prévenir Bernard.
+
 - **Accusés** : workflow **10** (form 17, avec bouton de téléchargement du flyer) et workflow
   **30** (form 35). Le flyer est servi sur `https://syndicat-lce.fr/flyer-LCE.pdf`
   (source `Flyer_images_et_pdf/2026-05-flyer_LCE.pdf`, à recopier dans `public/` à chaque
