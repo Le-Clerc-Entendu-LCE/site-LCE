@@ -148,6 +148,14 @@ def _methodes(item):
 
 
 def _proprietes(schema):
+    """Propriétés déclarées par un schéma.
+
+    Certains schémas de la spec ne sont pas des objets (ex. `McpRequest`, publié
+    comme une liste) : ils n'ont aucune propriété, et appeler `.get()` dessus
+    faisait planter le diff avant même de l'afficher.
+    """
+    if not isinstance(schema, dict):
+        return set()
     return set((schema.get("properties") or {}).keys())
 
 
@@ -205,7 +213,16 @@ def diff(ancien, nouveau):
     # champs ajoutés/retirés dans les schémas communs
     modifications = []
     for nom in sorted(set(s_old) & set(s_new)):
-        po, pn = _proprietes(s_old[nom]), _proprietes(s_new[nom])
+        ancien_s, nouveau_s = s_old[nom], s_new[nom]
+        # un schéma qui change de nature (objet ↔ liste) n'a pas de « champs » :
+        # le signaler tel quel évite un diff trompeur
+        if not isinstance(ancien_s, dict) or not isinstance(nouveau_s, dict):
+            if type(ancien_s) is not type(nouveau_s):
+                modifications.append(
+                    f"    ~ {nom} : type {type(ancien_s).__name__} → "
+                    f"{type(nouveau_s).__name__}")
+            continue
+        po, pn = _proprietes(ancien_s), _proprietes(nouveau_s)
         if po != pn:
             morceaux = []
             if pn - po:
@@ -300,8 +317,10 @@ def executer(force=False, check=False, diff_only=False, silencieux=False):
         os.utime(SPEC, None)          # on rajeunit pour ne pas re-télécharger demain
         return 0
 
-    # sauvegarde puis écriture
-    sauvegarde = SPEC.with_name(f"mounch-api-docs.avant-{datetime.now():%Y-%m-%d_%H%M}.json")
+    # sauvegarde puis écriture (le nom suit celui de la spec : il ne doit pas
+    # être figé, sinon une spec renommée produit une sauvegarde trompeuse)
+    sauvegarde = SPEC.with_name(
+        f"{SPEC.stem}.avant-{datetime.now():%Y-%m-%d_%H%M}{SPEC.suffix}")
     shutil.copy2(SPEC, sauvegarde)
 
     with open(SPEC, "w", encoding="utf-8") as f:
