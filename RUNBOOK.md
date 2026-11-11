@@ -66,11 +66,23 @@ lequel manque :
 
 Les deux sont posés par `mounch_client.call()` — ne pas les retirer.
 
-### Spec OpenAPI — mise à jour automatique (24 h)
+### Spec OpenAPI — deux documents à fusionner (mise à jour automatique, 24 h)
 
-La spec locale (`cahiers_ces_charges_…/mounch-api-docs.json`) fait foi pour les endpoints, schémas
-et pièges. `mounch_client` vérifie son âge **au premier `call()` de chaque processus** et la
-rafraîchit si elle a **plus de 24 heures**, via `scripts/maj_spec_mounch.py`.
+Mounch publie **deux documents OpenAPI complémentaires**, listés dans le catalogue
+`/.well-known/api-catalog` :
+
+| Document | URL | Contenu |
+|---|---|---|
+| **authentifié** | `/openapi.authenticated.json` | 209 chemins — workflows, contacts, adhésions, factures, chèques… |
+| **public** | `/openapi.json` | 16 chemins — `/public/forms/*`, `/login`, `/oauth/*`, signatures |
+
+⚠️ **Ils ne s'imbriquent pas.** L'authentifié ne contient **pas** les routes publiques — dont
+`/public/forms/{slug}/start`, que `diffuser_ccn.py` et `diffuser_veille.py` utilisent pour soumettre
+un envoi. Fusionner les deux est donc indispensable : la spec locale (225 chemins) est l'union des
+deux, et conserve la trace des sources dans `info.x-sources`.
+
+`mounch_client` vérifie l'âge de la spec **au premier `call()` de chaque processus** et la rafraîchit
+si elle a **plus de 24 heures**, via `scripts/maj_spec_mounch.py`.
 
 - Silencieux quand il n'y a rien à faire ; **imprime le diff structurel** (endpoints et schémas
   ajoutés/supprimés/modifiés, version d'API) lorsqu'une mise à jour est appliquée.
@@ -84,10 +96,8 @@ python3 scripts/maj_spec_mounch.py --diff     # diff local ↔ distant, sans éc
 python3 scripts/maj_spec_mounch.py --force    # rafraîchir même si < 24 h
 ```
 
-⚠️ **Garde-fou** : `https://api.mounch.wdes.eu/openapi.json` ne sert que l'**API publique**
-(16 chemins), alors que la spec locale couvre l'API complète (205 chemins). Le script **refuse**
-tout remplacement qui ferait perdre plus de 40 % des chemins — sinon la spec utile serait
-remplacée par un sous-ensemble. Une URL complète peut être fournie via `MOUNCH_SPEC_URL`.
+Garde-fou : le script **refuse** un remplacement qui ferait perdre plus de 40 % des chemins (cas
+d'une source qui ne servirait qu'un document). Forçable avec `--force`.
 
 ---
 

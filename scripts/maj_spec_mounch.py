@@ -33,7 +33,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 USER_AGENT = "LCE-Syndicat-Integrator/1.0 (+https://syndicat-lce.fr)"
-URL_DEFAUT = "https://api.mounch.wdes.eu/openapi.json"
+
+# Mounch publie DEUX documents OpenAPI, décrits par le catalogue de découverte :
+#   - /openapi.json                  → surface non authentifiée (16 chemins)
+#   - /openapi.authenticated.json    → surface authentifiée par jeton (209 chemins)
+# C'est le second qui nous intéresse : c'est la spec principale, celle qui
+# documente les workflows, contacts, adhésions, formulaires…
+URL_DEFAUT = "https://api.mounch.wdes.eu/openapi.authenticated.json"
+URL_PUBLIQUE = "https://api.mounch.wdes.eu/openapi.json"
+CATALOGUE = "https://api.mounch.wdes.eu/.well-known/api-catalog"
+
 FRAICHEUR = 24 * 3600          # 24 heures
 SEUIL_PERTE = 0.40             # au-delà de 40 % de chemins perdus : refus
 
@@ -67,6 +76,68 @@ def telecharger(url, jeton, timeout=15):
     with urllib.request.urlopen(req, timeout=timeout) as r:
         corps = r.read().decode("utf-8")
     return json.loads(corps)
+
+
+def telecharger_complete(jeton):
+    """Spec **complète** = document authentifié + document public fusionnés.
+
+    Les deux documents sont complémentaires, pas imbriqués : l'authentifié ne
+    contient pas les routes publiques (`/public/forms/...`), et le public ne
+    contient pas l'essentiel. Fusionner est indispensable — nos scripts de
+    diffusion utilisent `/public/forms/{slug}/start` pour soumettre un envoi.
+
+    Retourne (spec_fusionnée, provenance) où provenance décrit les deux sources.
+    """
+    url_auth = decouvrir(jeton)
+    auth = telecharger(url_auth, jeton)
+
+    url_pub = os.environ.get("MOUNCH_SPEC_PUBLIQUE", URL_PUBLIQUE)
+    try:
+        pub = telecharger(url_pub, jeton)
+    except Exception as exc:
+        return auth, [url_auth], f"public indisponible ({exc})"
+
+    if not (pub.get("paths")):
+        return auth, [url_auth], "public vide"
+
+    fusion = json.loads(json.dumps(auth))          # copie profonde
+    ajoutes = []
+    for chemin, item in (pub.get("paths") or {}).items():
+        if chemin not in fusion.setdefault("paths", {}):
+            fusion["paths"][chemin] = item
+            ajoutes.append(chemin)
+
+    # schémas du document public absents de l'authentifié
+    s_auth = fusion.setdefault("components", {}).setdefault("schemas", {})
+    for nom, schema in ((pub.get("components") or {}).get("schemas") or {}).items():
+        s_auth.setdefault(nom, schema)
+
+    info = fusion.setdefault("info", {})
+    info["x-sources"] = [url_auth, url_pub]
+    info["x-merged-public-paths"] = sorted(ajoutes)
+
+    return fusion, [url_auth, url_pub], f"{len(ajoutes)} chemin(s) public(s) fusionné(s)"
+
+
+def decouvrir(jeton):
+    """URL de la spec **authentifiée**, lue dans /.well-known/api-catalog.
+
+    Le catalogue liste les deux documents ; on retient celui qui se présente
+    comme authentifié par jeton. À défaut, on garde URL_DEFAUT.
+    """
+    try:
+        cat = telecharger(CATALOGUE, jeton)
+    except Exception:
+        return URL_DEFAUT
+    for lien in (cat.get("linkset") or []):
+        for desc in (lien.get("service-desc") or []):
+            titre = (desc.get("title") or "").lower()
+            # attention : « unauthenticated » contient « authenticated »
+            if "unauthenticated" in titre or "non-authenticated" in titre:
+                continue
+            if "authenticated" in titre or "token" in titre:
+                return desc.get("href") or URL_DEFAUT
+    return URL_DEFAUT
 
 
 # ─── diff structurel ───────────────────────────────────────────────────────
@@ -187,15 +258,19 @@ def executer(force=False, check=False, diff_only=False, silencieux=False):
                         "rien à télécharger.")
         return 0
 
-    url = os.environ.get("MOUNCH_SPEC_URL", URL_DEFAUT)
     jeton = os.environ.get("MOUNCH_TOKEN", "")
-    say(silencieux, f"Spec vieille de {age:.1f} h — téléchargement de {url}")
+    say(silencieux, f"Spec vieille de {age:.1f} h — téléchargement des deux documents Mounch")
 
     try:
-        spec_new = telecharger(url, jeton)
+        if os.environ.get("MOUNCH_SPEC_URL"):
+            spec_new = telecharger(os.environ["MOUNCH_SPEC_URL"], jeton)
+            provenance = f"source imposée : {os.environ['MOUNCH_SPEC_URL']}"
+        else:
+            spec_new, sources, provenance = telecharger_complete(jeton)
     except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, ValueError) as exc:
         say(silencieux, f"⚠️  téléchargement impossible ({exc}) — spec locale conservée intacte.")
         return 0
+    say(silencieux, f"  {provenance}")
 
     n_new = len(spec_new.get("paths") or {})
     if not n_new:
