@@ -54,6 +54,41 @@ et 08. Les réseaux sociaux suivent : **LinkedIn mercredi, Facebook jeudi**.
 - **Helper** : `site-LCE/scripts/mounch_client.py` — `call(méthode, chemin, payload)`.
   User-Agent obligatoire, déjà géré.
 
+### En-têtes exigés par l'API
+
+Mounch refuse les requêtes qui n'envoient pas ces deux en-têtes — l'erreur ne dit pas toujours
+lequel manque :
+
+- **`Accept: application/json`** : sans lui, l'API peut répondre autre chose que du JSON ;
+- **`User-Agent` descriptif**, de la forme `<produit>/<version> (+<url>)`. Un User-Agent de script
+  (`curl/8.x`, `python-urllib/3.x`) est **refusé en 403** par le pare-feu applicatif. Le nôtre :
+  `LCE-Syndicat-Integrator/1.0 (+https://syndicat-lce.fr)`.
+
+Les deux sont posés par `mounch_client.call()` — ne pas les retirer.
+
+### Spec OpenAPI — mise à jour automatique (24 h)
+
+La spec locale (`cahiers_ces_charges_…/mounch-api-docs.json`) fait foi pour les endpoints, schémas
+et pièges. `mounch_client` vérifie son âge **au premier `call()` de chaque processus** et la
+rafraîchit si elle a **plus de 24 heures**, via `scripts/maj_spec_mounch.py`.
+
+- Silencieux quand il n'y a rien à faire ; **imprime le diff structurel** (endpoints et schémas
+  ajoutés/supprimés/modifiés, version d'API) lorsqu'une mise à jour est appliquée.
+- Sauvegarde automatique `mounch-api-docs.avant-AAAA-MM-JJ_HHMM.json` avant écriture.
+- Jamais bloquant : en cas d'échec réseau, la spec locale reste intacte et l'appel API continue.
+  Désactivable avec `MOUNCH_SPEC_CHECK=0`.
+
+```bash
+python3 scripts/maj_spec_mounch.py --check    # âge et volume, sans réseau
+python3 scripts/maj_spec_mounch.py --diff     # diff local ↔ distant, sans écrire
+python3 scripts/maj_spec_mounch.py --force    # rafraîchir même si < 24 h
+```
+
+⚠️ **Garde-fou** : `https://api.mounch.wdes.eu/openapi.json` ne sert que l'**API publique**
+(16 chemins), alors que la spec locale couvre l'API complète (205 chemins). Le script **refuse**
+tout remplacement qui ferait perdre plus de 40 % des chemins — sinon la spec utile serait
+remplacée par un sous-ensemble. Une URL complète peut être fournie via `MOUNCH_SPEC_URL`.
+
 ---
 
 ## 3. Diffusion aux adhérents (processus commun)

@@ -22,6 +22,24 @@ BASE = "https://api.mounch.wdes.eu/api"
 # Association LCE (entreprise 114) : porte les adhésions et les cotisations.
 COMPANY_ID = 114
 
+# Vérification de la spec OpenAPI : une seule fois par processus, et seulement
+# si le fichier local a plus de 24 h (voir maj_spec_mounch.py). Silencieux sauf
+# lorsqu'une mise à jour est réellement appliquée. Jamais bloquant, désactivable
+# avec MOUNCH_SPEC_CHECK=0.
+_spec_verifiee = False
+
+
+def _verifier_spec_une_fois():
+    global _spec_verifiee
+    if _spec_verifiee:
+        return
+    _spec_verifiee = True
+    try:
+        import maj_spec_mounch
+        maj_spec_mounch.verifier_auto()
+    except Exception:
+        pass
+
 
 def call(method, path, payload=None, token=None):
     """
@@ -31,6 +49,7 @@ def call(method, path, payload=None, token=None):
     still parsed when possible — no exception is raised so callers can
     inspect 4xx/5xx payloads.
     """
+    _verifier_spec_une_fois()
     token = token or os.environ.get("MOUNCH_TOKEN")
     if not token:
         raise RuntimeError("MOUNCH_TOKEN env var is not set")
