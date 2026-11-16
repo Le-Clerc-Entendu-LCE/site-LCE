@@ -54,6 +54,51 @@ et 08. Les réseaux sociaux suivent : **LinkedIn mercredi, Facebook jeudi**.
 - **Helper** : `site-LCE/scripts/mounch_client.py` — `call(méthode, chemin, payload)`.
   User-Agent obligatoire, déjà géré.
 
+### En-têtes exigés par l'API
+
+Mounch refuse les requêtes qui n'envoient pas ces deux en-têtes — l'erreur ne dit pas toujours
+lequel manque :
+
+- **`Accept: application/json`** : sans lui, l'API peut répondre autre chose que du JSON ;
+- **`User-Agent` descriptif**, de la forme `<produit>/<version> (+<url>)`. Un User-Agent de script
+  (`curl/8.x`, `python-urllib/3.x`) est **refusé en 403** par le pare-feu applicatif. Le nôtre :
+  `LCE-Syndicat-Integrator/1.0 (+https://syndicat-lce.fr)`.
+
+Les deux sont posés par `mounch_client.call()` — ne pas les retirer.
+
+### Spec OpenAPI — deux documents à fusionner (mise à jour automatique, 24 h)
+
+Mounch publie **deux documents OpenAPI complémentaires**, listés dans le catalogue
+`/.well-known/api-catalog` :
+
+| Document | URL | Contenu |
+|---|---|---|
+| **authentifié** | `/openapi.authenticated.json` | 209 chemins — workflows, contacts, adhésions, factures, chèques… |
+| **public** | `/openapi.json` | 16 chemins — `/public/forms/*`, `/login`, `/oauth/*`, signatures |
+
+⚠️ **Ils ne s'imbriquent pas.** L'authentifié ne contient **pas** les routes publiques — dont
+`/public/forms/{slug}/start`, que `diffuser_ccn.py` et `diffuser_veille.py` utilisent pour soumettre
+un envoi. Fusionner les deux est donc indispensable : la spec locale (225 chemins) est l'union des
+deux, et conserve la trace des sources dans `info.x-sources`.
+
+`mounch_client` vérifie l'âge de la spec **au premier `call()` de chaque processus** et la rafraîchit
+si elle a **plus de 24 heures**, via `scripts/maj_spec_mounch.py`.
+
+- Silencieux quand il n'y a rien à faire ; **imprime le diff structurel** (endpoints et schémas
+  ajoutés/supprimés/modifiés, version d'API) lorsqu'une mise à jour est appliquée.
+- Sauvegarde automatique `mounch-api-docs.avant-AAAA-MM-JJ_HHMM.json` avant écriture.
+- Jamais bloquant : en cas d'échec réseau, la spec locale reste intacte et l'appel API continue.
+  Désactivable avec `MOUNCH_SPEC_CHECK=0`.
+
+```bash
+python3 scripts/maj_spec_mounch.py --check    # âge et volume, sans réseau
+python3 scripts/maj_spec_mounch.py --diff     # diff local ↔ distant, sans écrire
+python3 scripts/maj_spec_mounch.py --force    # rafraîchir même si < 24 h
+```
+
+Garde-fou : le script **refuse** un remplacement qui ferait perdre plus de 40 % des chemins (cas
+d'une source qui ne servirait qu'un document). Forçable avec `--force`.
+
 ---
 
 ## 3. Diffusion aux adhérents (processus commun)
@@ -70,7 +115,7 @@ Les deux diffusions (CCN et veille) partagent la même mécanique :
 
 ```bash
 # Série CCN
-cd /mnt/Documents/Documents/LCE_SYNDICAT/site-LCE
+cd /mnt/Documents/Documents/20 - SYNDICAT LCE/site-LCE
 python3 scripts/diffuser_ccn.py --sujet "LCE — <titre du post>" \
   ../Communication/Post{NN}/email_membres.html
 
@@ -180,6 +225,42 @@ d'erreur de saisie, la seule issue est un correctif en base par William.
 Convention de saisie : `fiscalYearId` 23 pour l'exercice 2026 (24 pour 2027),
 `amountExclTax 0` / `amountInclTax 10`, libellé en compta 7561.
 
+### Quittances de cotisation — script `emettre_quittances.py`
+
+> Mode opératoire complet (règles de remplissage, rééditions, changement d'exercice,
+> checklist) : `Documents-SIREN-bulletin_adhésion_etc/quittances_cotisations_2026/MODE_OPERATOIRE_quittances.md`.
+
+Les reçus annuels partent d'un **PDF remplissable** :
+`Documents-SIREN-bulletin_adhésion_etc/quittances_cotisations_2026/Recu_cotisation_Le_Clerc_Entendu.pdf`
+(14 champs AcroForm). Le script le remplit, l'aplatit (Ghostscript) et le dépose dans le même
+dossier sous `{Initiales}_Recu_cotisation_Le_Clerc_Entendu.pdf`.
+
+```bash
+python3 scripts/emettre_quittances.py                  # simulation (défaut)
+python3 scripts/emettre_quittances.py --apply          # émet les quittances manquantes
+python3 scripts/emettre_quittances.py --membre 26 --apply
+```
+
+- **Source** : Mounch — seulement les cotisations `isPaid` de l'exercice (`fiscalYearId` 23).
+  Ne jamais émettre depuis le registre Excel : Mounch fait foi.
+- **Idempotent** : registre `registre_quittances.csv` dans le dossier des quittances ; au premier
+  lancement il est amorcé en relisant les PDF existants. Le rapprochement se fait **par le nom**
+  (les anciens « N° d'adhérent » imprimés comportent des erreurs : BELDI 009 au lieu de 4,
+  COUE 017 au lieu de 12…).
+- **Numérotation** : 01 → 024 émises ; **doublon 013** (PLM et RLD) et **trou 007**. Rééditions :
+  **025** (LE MEUR, annule et remplace le 013) et **026** (LARUE). Prochain numéro : **027**.
+  Ne pas renuméroter l'existant (pièces comptables).
+- **Réédition** : `--remplace ADHERENT` — l'ancienne quittance (retrouvée par le nom ou les
+  initiales) est renommée `….annule-nXXX.pdf`, marquée `annule` au registre, et la nouvelle porte
+  la mention « Annule et remplace le reçu n° XXX. » incrustée en bas de page. Les fichiers
+  `.annule` sont ignorés par le rapprochement.
+- **Garde-fous** : refuse d'émettre si l'adresse manque (repli sur le formulaire d'adhésion) ;
+  signale une quittance incomplète aux mêmes initiales ; le champ signature reste **vide** comme
+  sur les quittances existantes.
+- **Envoi** : Mounch ne sait pas joindre de PDF (étape `email` sans `attachments`). Le script
+  prépare le fichier ; l'envoi reste manuel tant que la demande à William n'est pas livrée
+  (voir §11 ou mémoire `quittances-cotisations`).
+
 ---
 
 ## 6. Pièges connus (Mounch)
@@ -248,6 +329,37 @@ smtplib.SMTP('smtp.ethereal.email', 587) → starttls() → login(user, pass)
 ⚠️ **La tâche ne doit jamais écraser un fichier existant.** Si `email_membres.html` est déjà là,
 c'est que le post a été préparé et relu : le brouillon peut contenir des corrections issues de la
 relecture du texte conventionnel, absentes de la feuille Excel.
+
+### Deux publics, deux listes
+
+| Public | Source | Ce qu'il reçoit | État |
+|---|---|---|---|
+| **Adhérents** | `list_association_members` (workflows 18 et 28) | veille + série CCN | opérationnel |
+| **Sympathisants** | formulaires 17 (`recevoir-le-flyer-lce`) et 35 (`recevoir-la-serie-pedagogique-ccn`) | **série CCN seulement** | **bloqué** : Mounch ne sait pas lister les soumissions |
+
+- L'étape native **`list_form_submissions`** (miroir de `list_association_members`) est demandée à
+  William le 03/11/2026 ; spécification dans
+  `cahiers_ces_charges_Claude_et_notes_fichiers_md/2026-11-03_demande_native_listes_diffusion_Mounch.md`.
+- **En attendant, ne pas promettre de lien de désinscription ni de double opt-in** : aucun des deux
+  n'existe. La désinscription se fait par réponse à l'e-mail.
+
+#### 🔧 Contournement en place : `thiange@wanadoo.fr` en dur dans le Cci
+
+Un inscrit du 27/09/2026 (`thiange@wanadoo.fr`) attend la série depuis le 03/11/2026, date à
+laquelle il a reçu un e-mail de rattrapage annonçant le premier épisode **lundi 9 novembre**.
+
+- L'étape **176** du workflow 28 porte désormais :
+  `bcc = thiange@wanadoo.fr, {{ steps.175.csv }}, Syndicat LCE SGA <sga@syndicat-lce.fr>`
+- **À retirer** dès que `list_form_submissions` est disponible, et **immédiatement** si cette
+  personne se désinscrit.
+- Toute nouvelle inscription à la série avant la livraison native **n'est pas couverte** : elle
+  reçoit son accusé (workflow 30) mais aucun épisode. Vérifier `GET /form-templates/35/submissions`
+  avant chaque envoi, et ajouter les nouvelles adresses de la même façon ou prévenir Bernard.
+
+- **Accusés** : workflow **10** (form 17, avec bouton de téléchargement du flyer) et workflow
+  **30** (form 35). Le flyer est servi sur `https://syndicat-lce.fr/flyer-LCE.pdf`
+  (source `Flyer_images_et_pdf/2026-05-flyer_LCE.pdf`, à recopier dans `public/` à chaque
+  nouvelle version).
 
 ### Règles de rédaction
 
