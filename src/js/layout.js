@@ -100,6 +100,7 @@ function buildFooter() {
           <h5>Liens utiles</h5>
           <ul class="list-unstyled">
             <li class="mb-2"><a href="kit-elections-cse-LCE.pdf" download>Kit élections CSE (PDF)</a></li>
+            <li class="mb-2"><a href="fiche-rupture-conventionnelle-LCE.pdf" download>Fiche rupture conventionnelle (PDF)</a></li>
             <li class="mb-2"><a href="https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635092" target="_blank" rel="noopener">CCN Notariat (IDCC 2205)</a></li>
             <li class="mb-2"><a href="https://www.crpcen.fr" target="_blank" rel="noopener">CRPCEN</a></li>
             <li class="mb-2"><a href="https://www.notaires.fr" target="_blank" rel="noopener">Conseil Supérieur du Notariat</a></li>

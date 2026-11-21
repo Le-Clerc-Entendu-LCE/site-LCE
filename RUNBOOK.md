@@ -454,6 +454,19 @@ python3 scripts/generate-kit-cse.py
 pdfinfo public/kit-elections-cse-LCE.pdf | grep Pages
 ```
 
+- `public/fiche-rupture-conventionnelle-LCE.pdf` — fiche « Préparer son entretien de rupture
+  conventionnelle » (3 pages, avec logo). La **source ODT** est dans le dossier parent
+  `05 - Fiches métiers et documentation/fiche-rupture-conventionnelle-LCE.odt` ; après
+  modification, la reconvertir puis recopier le PDF dans `public/` :
+
+```bash
+libreoffice --headless --convert-to pdf --outdir . "../05 - Fiches métiers et documentation/fiche-rupture-conventionnelle-LCE.odt"
+cp "../05 - Fiches métiers et documentation/fiche-rupture-conventionnelle-LCE.pdf" public/
+```
+
+Téléchargeable depuis `vos-droits.html` (section « Rupture conventionnelle »), `actualites.html` et
+le pied de page, rubrique « Liens utiles » (`src/js/layout.js`).
+
 ---
 
 ### Veille — accès aux sources
