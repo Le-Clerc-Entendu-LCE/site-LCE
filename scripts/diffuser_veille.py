@@ -19,6 +19,7 @@ import argparse
 import sys
 
 from mounch_client import call, controler_cotisations
+from html_utils import sans_commentaires
 
 SLUG = "diffusion-de-la-veille-juridique"
 
@@ -30,10 +31,18 @@ def main():
     args = parser.parse_args()
 
     with open(args.corps_html, encoding="utf-8") as fh:
-        html = fh.read()
-    if "<html" not in html.lower():
+        html_source = fh.read()
+    if "<html" not in html_source.lower():
         print("Le fichier ne ressemble pas à un e-mail HTML complet : abandon.")
         sys.exit(1)
+
+    # Les fichiers sources portent des commentaires d'atelier (date prévue,
+    # réserves de vérification, commande de diffusion). Ils ne doivent pas
+    # partir dans le message : on les retire avant de soumettre.
+    html = sans_commentaires(html_source)
+    if len(html) != len(html_source):
+        print(f"Commentaires retirés : {len(html_source) - len(html)} caractères.")
+
     # Mounch tronque silencieusement CORPS_HTML au-delà de 65 535 octets
     # (colonne SQL TEXT). Constaté sur workflow 28 le 30/08/2026 — signalé
     # à William. Marge de sécurité à 60 000 (UTF-8 accents/emoji multi-octets).

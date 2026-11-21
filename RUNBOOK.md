@@ -127,6 +127,13 @@ python3 scripts/diffuser_veille.py --sujet "Veille juridique du notariat — sem
 ⚠️ **Le chemin du corps HTML est relatif au dossier `site-LCE`** : depuis la racine du dépôt,
 c'est `../Communication/…` (un `../..` met un dossier de trop — erreur déjà commise).
 
+**Les commentaires HTML sont retirés avant l'envoi** (`scripts/html_utils.py`). Les fichiers
+sources portent en tête un bloc d'instructions d'atelier (date prévue, réserves de vérification,
+commande de diffusion) et deux marqueurs autour du bandeau site. Invisibles à la lecture, ils
+restaient lisibles dans le code source du message reçu : ils ne partent plus. Le script affiche le
+nombre de caractères retirés, et le **contenu visible est inchangé** — vérifié par comparaison du
+rendu texte avant/après sur tous les e-mails de la série.
+
 ### Approuver
 
 Le script affiche l'identifiant de la pause. Deux voies :
@@ -136,9 +143,33 @@ Le script affiche l'identifiant de la pause. Deux voies :
   `POST /workflow-approvals/{id}/decisions {"decision": "approve"}`
 
 **Avant d'approuver, toujours contrôler :**
-1. le **sujet** et la **taille** du HTML stocké (voir le piège de troncature §6) ;
-2. que le corps stocké est bien identique au fichier local ;
-3. l'**heure de Paris** de la soumission (l'API renvoie de l'UTC : +2 h en été).
+1. que **les faits n'ont pas bougé** depuis la rédaction (voir ci-dessous) ;
+2. le **sujet** et la **taille** du HTML stocké (voir le piège de troncature §6) ;
+3. que le corps stocké est bien identique au fichier local ;
+4. l'**heure de Paris** de la soumission (l'API renvoie de l'UTC : +2 h en été).
+
+### ⚠️ Un post préparé à l'avance doit être revérifié le jour de l'envoi
+
+Un brouillon peut dormir des semaines. Entre sa rédaction et sa diffusion, une convention peut
+avoir été modifiée, un accord salarial signé, une jurisprudence rendue, un décret publié — et le
+texte, pourtant relu et validé, devient faux. Ce n'est pas hypothétique : la série a produit un
+« cadres : 5 mois » périmé depuis trois ans, et une « prime d'ancienneté » disparue depuis 2001.
+
+**Avant de soumettre un brouillon ancien, repasser sur chaque affirmation chiffrée ou datée :**
+
+| Ce qui peut avoir changé | Où vérifier |
+|---|---|
+| Durée, montant, condition conventionnelle | article dans `CCN_notariat_IDCC2205/texte-consolide/`, ligne « en vigueur depuis » |
+| Valeur du point, minima | dernier avenant salaires (`_visuels/generer.py` porte `POINT`) |
+| Nouveau texte conventionnel | relancer `maj_spec_mounch` / `_outils/`, ou le fonds DILA |
+| Texte étendu ou non | Légifrance et arrêtés d'extension |
+| Jurisprudence citée | fonds CASS, ou Légifrance |
+| Liens du bandeau | `curl` sur chaque URL : un lien mort se voit par tous |
+
+Si quelque chose a bougé : **corriger le brouillon**, régénérer le visuel si un chiffre change,
+puis refaire le préflight. En cas de doute sur l'ampleur, **demander à Bernard** plutôt que de
+diffuser un texte approximatif — un post faux se retourne contre le syndicat auprès de clercs qui
+connaissent leur convention.
 
 Après envoi, vérifier le journal d'exécution (`GET /workflows/{id}/executions`) :
 statut `completed`, aucune erreur, et le **nombre de destinataires**.
