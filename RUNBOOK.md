@@ -166,6 +166,11 @@ texte, pourtant relu et validé, devient faux. Ce n'est pas hypothétique : la s
 | Jurisprudence citée | fonds CASS, ou Légifrance |
 | Liens du bandeau | `curl` sur chaque URL : un lien mort se voit par tous |
 
+**Le bandeau « site internet » vit dans `Communication/_gabarits/bandeau.html`** (depuis le
+23/11/2026, auparavant il était repris du post 09). Pour l'actualiser : modifier ce fichier, puis
+reconstruire **uniquement les e-mails non diffusés** — un post déjà envoyé garde son fichier comme
+archive de ce qui est parti, ne pas l'écraser.
+
 Si quelque chose a bougé : **corriger le brouillon**, régénérer le visuel si un chiffre change,
 puis refaire le préflight. En cas de doute sur l'ampleur, **demander à Bernard** plutôt que de
 diffuser un texte approximatif — un post faux se retourne contre le syndicat auprès de clercs qui
