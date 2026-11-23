@@ -160,15 +160,16 @@ texte, pourtant relu et validé, devient faux. Ce n'est pas hypothétique : la s
 | Ce qui peut avoir changé | Où vérifier |
 |---|---|
 | Durée, montant, condition conventionnelle | article dans `CCN_notariat_IDCC2205/texte-consolide/`, ligne « en vigueur depuis » |
-| Valeur du point, minima | dernier avenant salaires (`_visuels/generer.py` porte `POINT`) |
+| Valeur du point, minima | dernier avenant salaires (`site-LCE/scripts/visuels/generer.py` porte `POINT`) |
 | Nouveau texte conventionnel | relancer `maj_spec_mounch` / `_outils/`, ou le fonds DILA |
 | Texte étendu ou non | Légifrance et arrêtés d'extension |
 | Jurisprudence citée | fonds CASS, ou Légifrance |
 | Liens du bandeau | `curl` sur chaque URL : un lien mort se voit par tous |
 
 **Le bandeau « site internet » vit dans `site-LCE/scripts/templates/bandeau.html`** — dans le dépôt
-git, donc versionné (depuis le 23/11/2026 ; auparavant il était repris du post 09, puis posé sous
-`Communication/_gabarits/`). Pour l'actualiser : modifier ce fichier, puis reconstruire
+git, donc versionné. Il a d'abord été repris du post 09, puis isolé sous `Communication/_gabarits/`,
+et il est dans le dépôt depuis le 23/11/2026 ; le gabarit d'e-mail et la charte visuelle l'ont
+rejoint. Pour l'actualiser : modifier ce fichier, puis reconstruire
 **uniquement les e-mails non diffusés** — un post déjà envoyé garde son fichier comme archive de ce
 qui est parti, ne pas l'écraser.
 
