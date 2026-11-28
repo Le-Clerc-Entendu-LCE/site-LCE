@@ -31,6 +31,8 @@ _SOURCE_LOGO = COM / "Post09" / "email_membres.html"
 # Le bandeau vit à côté de ce fichier : versionné avec le dépôt, une seule copie.
 # On le met à jour sans toucher à un e-mail déjà envoyé, qui sert d'archive.
 _BANDEAU_FICHIER = Path(__file__).resolve().parent / "bandeau.html"
+# Bloc d'actualité conventionnelle, facultatif : vider le fichier le retire.
+_MENTION_FICHIER = Path(__file__).resolve().parent / "mention-actualisation.html"
 
 
 def _logo():
@@ -47,6 +49,25 @@ def _bandeau():
     src = _BANDEAU_FICHIER.read_text(encoding="utf-8")
     src = re.sub(r"<!--(?!\s*(?:\[if|\[endif)).*?-->", "", src, flags=re.S)
     debut = src.find("<tr>")
+    fin = src.rfind("</tr>")
+    return src[debut:fin + len("</tr>")]
+
+
+def _mention():
+    """Bloc d'actualité conventionnelle, inséré avant le bandeau.
+
+    Renvoie une chaîne vide si le fichier ne contient plus de ligne de tableau :
+    c'est ainsi qu'on retire la mention quand l'actualité est passée, sans
+    toucher au code.
+    """
+    f = _MENTION_FICHIER
+    if not f.exists():
+        return ""
+    src = f.read_text(encoding="utf-8")
+    src = re.sub(r"<!--(?!\s*(?:\[if|\[endif)).*?-->", "", src, flags=re.S)
+    debut = src.find("<tr>")
+    if debut < 0:
+        return ""
     fin = src.rfind("</tr>")
     return src[debut:fin + len("</tr>")]
 
@@ -177,6 +198,8 @@ def rendre(episode, module, sujet, titre, sous_titre, blocs,
             <p style="margin:0 0 14px 0;">{cta}</p>
           </td>
         </tr>
+
+        {_mention()}
 
         {_bandeau()}
 
